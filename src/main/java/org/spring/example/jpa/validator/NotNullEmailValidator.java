@@ -1,11 +1,9 @@
 package org.spring.example.jpa.validator;
 
 import jakarta.validation.ConstraintValidatorContext;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.internal.constraintvalidators.AbstractEmailValidator;
-import org.springframework.stereotype.Component;
 
 import java.util.regex.Matcher;
 import java.util.regex.PatternSyntaxException;

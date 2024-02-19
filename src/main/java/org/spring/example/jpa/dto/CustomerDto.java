@@ -16,12 +16,8 @@ import org.spring.example.jpa.validator.NotNullEmail;
 @AllArgsConstructor
 public class CustomerDto {
 
-    //  @NotNull : 제한된 필드에 null 허용 하지 않음, 비어 있을 수 있음.
-    //  @NotEmpty : 제한된 필드에 null 허용 하지 않음, 길이가 0보다 커야함. @Size 와 함께 사용.
-    //  @NotBlank : 제한된 필드에 null 허용 하지 않음, 길이는 0보다 커야함.
-
     @NotEmpty
-    @NotNullEmail  //  null 허용.
+    @NotNullEmail
     private String customerId;
 
     @NotBlank
