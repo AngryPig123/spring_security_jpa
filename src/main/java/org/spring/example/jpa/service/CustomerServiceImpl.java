@@ -7,8 +7,6 @@ import org.spring.example.jpa.entity.Customer;
 import org.spring.example.jpa.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -20,7 +18,8 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDto save(CustomerDto customerDto) {
         Customer save = customerRepository.save(customerDto.toEntity());
         log.info("save entity = {}", save);
-        return customerDto;
+        save.setPhone("mock test!!!");
+        return save.toDto();
     }
 
 }

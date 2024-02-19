@@ -2,10 +2,7 @@ package org.spring.example.jpa.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.spring.example.jpa.dto.CustomerDto;
 
 
@@ -32,6 +29,7 @@ public class Customer {
     @Column(name = "address", nullable = false)
     private String address;
 
+    @Setter
     @Column(name = "phone", nullable = false)
     private String phone;
 
