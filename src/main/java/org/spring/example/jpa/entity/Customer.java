@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.spring.example.jpa.dto.CustomerDto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -32,6 +35,9 @@ public class Customer {
     @Setter
     @Column(name = "phone", nullable = false)
     private String phone;
+
+    @OneToMany(mappedBy = "customer")
+    private List<OrderHeader> orderHeaders = new ArrayList<>();
 
     @Builder
     public Customer(String customerId, String firstName, String lastName, String address, String phone) {
@@ -62,5 +68,5 @@ public class Customer {
                 ", phone='" + phone + '\'' +
                 '}';
     }
-
+    
 }

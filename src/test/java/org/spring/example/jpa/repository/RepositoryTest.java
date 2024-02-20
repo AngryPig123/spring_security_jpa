@@ -2,51 +2,33 @@ package org.spring.example.jpa.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.spring.example.jpa.dto.CustomerDto;
 import org.spring.example.jpa.entity.Customer;
-import org.spring.example.jpa.service.CustomerServiceImpl;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
+import org.spring.example.jpa.entity.OrderHeader;
 
 @Slf4j
-@ExtendWith(MockitoExtension.class)
-public class RepositoryTest {
+public class RepositoryTest extends RepositorySetup {
 
-    @Mock
-    private CustomerRepository customerRepository;
-
-    @InjectMocks
-    private CustomerServiceImpl customerService;
-
-    private CustomerDto customerDto;
-
-    @BeforeEach
-    void setUp() {
-        customerDto =
-                CustomerDto.builder()
-                        .customerId("johnDoe@gmail.com")
-                        .firstName("john")
-                        .lastName("doe")
-                        .address("동작대로 xx길 xxx xx")
-                        .phone("555-0101")
-                        .build();
+    @Test
+    void initializer() {
     }
 
     @Test
-    void customer_save_ok_1() {
-        when(customerRepository.save(any(Customer.class))).thenReturn(customerDto.toEntity());
-        CustomerDto save = customerService.save(new CustomerDto());
+    void customer_save_OK() {
+        Customer save = customerRepository.save(customerDto.toEntity());
         Assertions.assertNotNull(save);
-        Assertions.assertNotEquals(customerDto.getPhone(), save.getPhone());
-        Assertions.assertEquals(save.getPhone(),"mock test!!!");
+        Assertions.assertEquals(customerDto.getCustomerId(), save.getCustomerId());
+        Assertions.assertEquals(customerDto.getFirstName(), save.getFirstName());
+        Assertions.assertEquals(customerDto.getLastName(), save.getLastName());
+        Assertions.assertEquals(customerDto.getAddress(), save.getAddress());
+        Assertions.assertEquals(customerDto.getPhone(), save.getPhone());
+    }
+
+    @Test
+    void order_header_save_OK() {
+        OrderHeader save = orderHeaderRepository.save(orderHeaderDto.toEntity());
+        Assertions.assertNotNull(save);
+        Assertions.assertEquals(orderHeaderDto.getCustomer(), save.getCustomer());
     }
 
 }
