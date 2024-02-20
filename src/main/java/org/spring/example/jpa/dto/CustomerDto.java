@@ -17,8 +17,8 @@ public class CustomerDto {
 
     @NotEmpty
     @NotNullEmail
-    @IdDuplicateCheck(tableName = "customer", columnName = "customer_id")
-    private String customerId;
+    @IdDuplicateCheck(tableName = "customer", columnName = "customer_email")
+    private String customerEmail;
 
     @NotBlank
     private String firstName;
@@ -34,7 +34,7 @@ public class CustomerDto {
 
     public Customer toEntity() {
         return Customer.builder()
-                .customerId(customerId)
+                .customerEmail(customerEmail)
                 .firstName(firstName)
                 .lastName(lastName)
                 .address(address)

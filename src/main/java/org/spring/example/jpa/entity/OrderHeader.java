@@ -25,7 +25,7 @@ public class OrderHeader {
     private LocalDateTime orderDate;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
+    @JoinColumn(name = "customer_id", updatable = false)
     private Customer customer;
 
     @PrePersist

@@ -32,7 +32,7 @@ public class ValidatorTest {
     void beforeEach() {
         customerDto =
                 CustomerDto.builder()
-                        .customerId("johnDoe@gmail.com")
+                        .customerEmail("johnDoe@gmail.com")
                         .firstName("john")
                         .lastName("doe")
                         .address("동작대로 xx길 xxx xx")

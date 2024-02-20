@@ -20,8 +20,8 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "customer_id", nullable = false, updatable = false, unique = true)
-    private String customerId;
+    @Column(name = "customer_email", nullable = false, updatable = false, unique = true)
+    private String customerEmail;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -40,8 +40,8 @@ public class Customer {
     private List<OrderHeader> orderHeaders = new ArrayList<>();
 
     @Builder
-    public Customer(String customerId, String firstName, String lastName, String address, String phone) {
-        this.customerId = customerId;
+    public Customer(String customerEmail, String firstName, String lastName, String address, String phone) {
+        this.customerEmail = customerEmail;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -50,7 +50,7 @@ public class Customer {
 
     public CustomerDto toDto() {
         return CustomerDto.builder()
-                .customerId(customerId)
+                .customerEmail(customerEmail)
                 .firstName(firstName)
                 .lastName(lastName)
                 .address(address)
@@ -61,12 +61,12 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "customerId='" + customerId + '\'' +
+                "customerId='" + customerEmail + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';
     }
-    
+
 }

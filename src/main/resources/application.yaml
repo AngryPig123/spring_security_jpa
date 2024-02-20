@@ -3,7 +3,7 @@ spring:
     basename: messages/messages, messages/validation
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     show-sql: true
     open-in-view: false
   datasource:
