@@ -2,21 +2,22 @@ package org.spring.example.jpa.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.spring.example.jpa.dto.OrderHeaderDto;
 import org.spring.example.jpa.entity.Customer;
 import org.spring.example.jpa.entity.OrderHeader;
-import org.springframework.test.annotation.Commit;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 public class RepositoryTest extends RepositorySetup {
 
     @Test
+    @Order(1)
     void initializer() {
     }
 
     @Test
+    @Order(2)
     void customer_save_OK() {
         Customer saveCustomer = customer_save(customerDto.toEntity());
         Assertions.assertEquals(customerDto.getCustomerEmail(), saveCustomer.getCustomerEmail());
@@ -27,7 +28,7 @@ public class RepositoryTest extends RepositorySetup {
     }
 
     @Test
-    @Commit
+    @Order(3)
     void order_header_save_OK() {
         Customer saveCustomer = customer_save(customerDto.toEntity());
         OrderHeader saveOrderHeader = orderHeaderRepository.save(order_header_dto(saveCustomer).toEntity());

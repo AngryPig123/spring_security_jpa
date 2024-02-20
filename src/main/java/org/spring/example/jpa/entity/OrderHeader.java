@@ -45,11 +45,4 @@ public class OrderHeader {
                 .build();
     }
 
-    @Override
-    public String toString() {
-        return "OrderHeader{" +
-                "customer=" + customer +
-                '}';
-    }
-
 }

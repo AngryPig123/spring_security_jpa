@@ -58,15 +58,4 @@ public class Customer {
                 .build();
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "customerId='" + customerEmail + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
-    }
-
 }

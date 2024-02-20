@@ -1,6 +1,5 @@
 package org.spring.example.jpa.dto;
 
-import jakarta.persistence.*;
 import lombok.*;
 import org.spring.example.jpa.entity.Customer;
 import org.spring.example.jpa.entity.OrderHeader;
