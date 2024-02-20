@@ -1,44 +1,60 @@
 package org.spring.example.jpa.validator;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.core.Is;
+import jakarta.validation.ConstraintViolation;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.spring.example.jpa.controller.ValidatorTestController;
+import org.spring.example.jpa.dto.CustomerDto;
+import org.spring.example.jpa.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.context.MessageSource;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
+import java.util.Locale;
+import java.util.Set;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 public class ValidatorTest {
 
     @Autowired
-    ValidatorTestController validatorTestController;
+    private CustomerService customerService;
 
     @Autowired
-    private MockMvc mockMvc;
+    private LocalValidatorFactoryBean validator;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    private MessageSource messageSource;
+
+    private CustomerDto customerDto;
+
+    @BeforeEach
+    void beforeEach() {
+        customerDto =
+                CustomerDto.builder()
+                        .customerId("johnDoe@gmail.com")
+                        .firstName("john")
+                        .lastName("doe")
+                        .address("동작대로 xx길 xxx xx")
+                        .phone("555-0101")
+                        .build();
+    }
 
     @Test
-    public void custom_email_validator_test() throws Exception {
+    void id_duplicated_validator() {
 
-        ValidatorTestController.TestReq testReq = new ValidatorTestController.TestReq("");
+        Set<ConstraintViolation<CustomerDto>> validated = validator.validate(customerDto);
+        Assertions.assertEquals(0, validated.size());
 
-        String req = objectMapper.writeValueAsString(testReq);
+        customerService.save(customerDto);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/validator")
-                        .content(req)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email", Is.is("is not null!!")))
-                .andExpect(MockMvcResultMatchers.content()
-                        .contentType(MediaType.APPLICATION_JSON_VALUE));
+        validated = validator.validate(customerDto);
+        Assertions.assertEquals(1, validated.size());
+
+        ConstraintViolation<CustomerDto> violation = validated.iterator().next();
+        String errorMessage = violation.getMessage();
+        Assertions.assertEquals(messageSource.getMessage("validation.duplicated.id", null, Locale.KOREA), errorMessage);
+
     }
 
 }

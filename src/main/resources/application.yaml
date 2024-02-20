@@ -1,4 +1,6 @@
 spring:
+  messages:
+    basename: messages/messages, messages/validation
   jpa:
     hibernate:
       ddl-auto: create

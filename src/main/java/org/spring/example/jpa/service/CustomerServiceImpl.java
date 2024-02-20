@@ -17,8 +17,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDto save(CustomerDto customerDto) {
         Customer save = customerRepository.save(customerDto.toEntity());
-        log.info("save entity = {}", save);
-        save.setPhone("mock test!!!");
+        log.info("save = {}", save);
         return save.toDto();
     }
 

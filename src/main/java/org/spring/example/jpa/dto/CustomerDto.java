@@ -1,11 +1,10 @@
 package org.spring.example.jpa.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.spring.example.jpa.entity.Customer;
+import org.spring.example.jpa.validator.IdDuplicateCheck;
 import org.spring.example.jpa.validator.NotNullEmail;
 
 @Getter
@@ -18,6 +17,7 @@ public class CustomerDto {
 
     @NotEmpty
     @NotNullEmail
+    @IdDuplicateCheck(tableName = "customer", columnName = "customer_id")
     private String customerId;
 
     @NotBlank

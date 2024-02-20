@@ -2,6 +2,9 @@ package org.spring.example.jpa.controller;
 
 import jakarta.validation.Valid;
 import lombok.*;
+import org.spring.example.jpa.dto.CustomerDto;
+import org.spring.example.jpa.service.CustomerService;
+import org.spring.example.jpa.validator.IdDuplicateCheck;
 import org.spring.example.jpa.validator.NotNullEmail;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +16,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-public class ValidatorTestController {
+@RequiredArgsConstructor
+public class TestController {
+
+    private final CustomerService customerService;
 
     @PostMapping("/validator")
-    public ResponseEntity<String> addUser(@Valid @RequestBody TestReq testReq) {
+    public ResponseEntity<String> validator(@Valid @RequestBody TestReq testReq) {
+        return ResponseEntity.ok("valid ok");
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<String> save(@Valid @RequestBody CustomerDto customerDto) {
         return ResponseEntity.ok("valid ok");
     }
 
@@ -26,8 +37,13 @@ public class ValidatorTestController {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class TestReq {
+
         @NotNullEmail(message = "is not null!!")
         private String email;
+
+        @IdDuplicateCheck(tableName = "customer", columnName = "customer_id")
+        private String id;
+
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
