@@ -1,10 +1,9 @@
-package org.spring.example.jpa.validator;
-
+package org.spring.example.jpa.util.validator.annotation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import jakarta.validation.constraints.Pattern;
-import org.spring.example.jpa.validator.NotNullEmail.List;
+import org.spring.example.jpa.util.validator.IdDuplicateCheckValidator;
+import org.spring.example.jpa.util.validator.annotation.IdDuplicateCheck.List;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Repeatable;
@@ -14,27 +13,23 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Documented
-@Constraint(validatedBy = {NotNullEmailValidator.class})
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
 @Repeatable(List.class)
-public @interface NotNullEmail {
-    String message() default "{validation.not.null.email}";
+@Documented
+@Constraint(validatedBy = {IdDuplicateCheckValidator.class})
+public @interface IdDuplicateCheck {
 
-    Class<?>[] groups() default {};
-
+    String message() default "{validation.duplicated.id}";
     Class<? extends Payload>[] payload() default {};
-
-    String regexp() default ".*";
-
-    Pattern.Flag[] flags() default {};
-
+    Class<?>[] groups() default {};
+    String tableName();
+    String columnName();
     @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
     @Retention(RUNTIME)
     @Documented
-    public @interface List {
-        NotNullEmail[] value();
+    @interface List {
+        IdDuplicateCheck[] value();
     }
 
 }
