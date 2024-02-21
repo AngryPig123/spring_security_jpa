@@ -1,9 +1,10 @@
-package org.spring.example.jpa.validator;
+package org.spring.example.jpa.util.validator;
 
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.internal.constraintvalidators.AbstractEmailValidator;
+import org.spring.example.jpa.util.validator.annotation.NotNullEmail;
 
 import java.util.regex.Matcher;
 import java.util.regex.PatternSyntaxException;
@@ -34,7 +35,7 @@ public class NotNullEmailValidator extends AbstractEmailValidator<NotNullEmail> 
 
     @Override
     public boolean isValid(CharSequence value, ConstraintValidatorContext context) {
-        if (value == null || value == "") {
+        if (value == null || value.toString().isEmpty()) {
             return false;
         }
 
