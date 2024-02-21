@@ -65,14 +65,14 @@ public class ValidatorTest {
     void afterEach() {
         customerDto =
                 CustomerDto.builder()
-                        .customerId("johnDoe@gmail.com")
+                        .customerEmail("johnDoe@gmail.com")
                         .firstName("john")
                         .lastName("doe")
                         .address("동작대로 xx길 xxx xx")
                         .phone("555-0101")
                         .build();
 
-        customerRepository.deleteCustomerByCustomerId(customerDto.getCustomerId());
+        customerRepository.deleteCustomerByCustomerEmail(customerDto.getCustomerEmail());
 
     }
 
@@ -86,7 +86,7 @@ public class ValidatorTest {
         Assertions.assertEquals(1, validated.size());
         ConstraintViolation<CustomerDto> violation = validated.iterator().next();
         String errorMessage = violation.getMessage();
-        Assertions.assertEquals(messageSource.getMessage("validation.duplicated.id", null, Locale.KOREA), errorMessage);
+        Assertions.assertEquals(messageSource.getMessage("validation.duplicated.email", null, Locale.KOREA), errorMessage);
     }
 
     @Test
@@ -102,10 +102,10 @@ public class ValidatorTest {
     @Order(3)
     void validator_integrated_test_valid_fail_case1_emptyId() throws Exception {
         String notNullEmail = messageSource.getMessage("validation.not.null.email", null, Locale.getDefault());
-        customerDto.setCustomerId("");
+        customerDto.setCustomerEmail("");
         ResultActions resultActions = customerDtoValidatorRequest(customerDto);
         resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest());
-        resultActions.andExpect(MockMvcResultMatchers.jsonPath("$.customerId", Is.is(notNullEmail)));
+        resultActions.andExpect(MockMvcResultMatchers.jsonPath("$.customerEmail", Is.is(notNullEmail)));
     }
 
     @Test
@@ -113,10 +113,10 @@ public class ValidatorTest {
     void validator_integrated_test_valid_fail_case2_duplicateId() throws Exception {
         CustomerDto save = customerService.save(customerDto);
         Assertions.assertNotNull(save);
-        String duplicateId = messageSource.getMessage("validation.duplicated.id", null, Locale.getDefault());
+        String duplicateId = messageSource.getMessage("validation.duplicated.email", null, Locale.getDefault());
         ResultActions resultActions = customerDtoValidatorRequest(customerDto);
         resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest());
-        resultActions.andExpect(MockMvcResultMatchers.jsonPath("$.customerId", Is.is(duplicateId)));
+        resultActions.andExpect(MockMvcResultMatchers.jsonPath("$.customerEmail", Is.is(duplicateId)));
     }
 
     private ResultActions customerDtoValidatorRequest(CustomerDto customerDto) throws Exception {

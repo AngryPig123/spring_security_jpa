@@ -45,8 +45,7 @@ public class ServiceTest {
         when(customerRepository.save(any(Customer.class))).thenReturn(customerDto.toEntity());
         CustomerDto save = customerService.save(new CustomerDto());
         Assertions.assertNotNull(save);
-        Assertions.assertNotEquals(customerDto.getPhone(), save.getPhone());
-        Assertions.assertEquals(save.getPhone(),"mock test!!!");
+        Assertions.assertEquals(customerDto.getPhone(), save.getPhone());
     }
 
 }

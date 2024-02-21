@@ -20,7 +20,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = {IdDuplicateCheckValidator.class})
 public @interface IdDuplicateCheck {
 
-    String message() default "{validation.duplicated.id}";
+    String message() default "{validation.duplicated.email}";
     Class<? extends Payload>[] payload() default {};
     Class<?>[] groups() default {};
     String tableName();
