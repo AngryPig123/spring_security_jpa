@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import org.spring.example.jpa.dto.OrderHeaderDto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,9 +19,9 @@ import java.time.LocalDateTime;
 public class OrderHeader {
 
     @Id
-    @Column(name = "id", nullable = false, updatable = false, unique = true)
+    @Column(name = "order_id", nullable = false, updatable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long orderId;
 
     @Column(name = "order_date", nullable = false, updatable = false)
     private LocalDateTime orderDate;
@@ -27,6 +29,13 @@ public class OrderHeader {
     @ManyToOne
     @JoinColumn(name = "customer_id", updatable = false)
     private Customer customer;
+
+    @OneToMany(mappedBy = "orderHeader")    //  mappedBy 는 클래스명으로?
+    private List<OrderLine> orderLines = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "delivery_id", updatable = false)
+    private Delivery delivery;
 
     @PrePersist
     private void prePersist() {

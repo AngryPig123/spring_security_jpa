@@ -21,6 +21,12 @@ public abstract class RepositorySetup {
     @Autowired
     protected OrderHeaderRepository orderHeaderRepository;
 
+    @Autowired
+    protected OrderLineRepository orderLineRepository;
+
+    @Autowired
+    protected PizzaRepository pizzaRepository;
+
     protected CustomerDto customerDto;
 
     @BeforeEach
