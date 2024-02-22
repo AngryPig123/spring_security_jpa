@@ -55,4 +55,5 @@ public class User {
                 ", roleName=" + role.getName() +
                 '}';
     }
+
 }

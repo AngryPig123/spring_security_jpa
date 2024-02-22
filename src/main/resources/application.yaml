@@ -9,3 +9,8 @@ spring:
     username: root
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1/example
+server:
+  port: 8512
+
+logging.level:
+  org.springframework.web.cors.DefaultCorsProcessor: TRACE
