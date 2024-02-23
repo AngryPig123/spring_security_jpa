@@ -1,6 +1,9 @@
 package org.spring.example.jpa.security;
 
+import jakarta.servlet.Filter;
 import org.junit.jupiter.api.BeforeEach;
+import org.spring.example.jpa.configure.security.CsrfCookieFilter;
+import org.spring.example.jpa.configure.security.CsrfTokenLoggerFilter;
 import org.spring.example.jpa.configure.security.CustomCorsConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,19 +22,24 @@ public abstract class SecuritySetup {
     private WebApplicationContext wac;
 
     @Autowired
-    protected CustomCorsConfig customCorsConfig;
-    protected CorsConfiguration corsConfiguration;
-    protected MockHttpServletRequest httpServletRequest = new MockHttpServletRequest();
+    private CustomCorsConfig customCorsConfig;
+
+//    protected CorsConfiguration corsConfiguration;
+//    protected MockHttpServletRequest httpServletRequest = new MockHttpServletRequest();
     protected MockMvc mockMvc;
 
     @BeforeEach
     public void setup() {
+
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(wac)
                 .apply(springSecurity())
                 .build();
 
-        corsConfiguration = customCorsConfig.getCorsConfiguration(httpServletRequest);
+//        corsConfiguration = customCorsConfig.getCorsConfiguration(httpServletRequest);
     }
+
+
+
 
 }

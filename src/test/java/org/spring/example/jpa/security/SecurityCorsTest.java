@@ -17,7 +17,7 @@ public class SecurityCorsTest extends SecuritySetup {
     void get_basic_get_pass() throws Exception {
         mockMvc.perform(options("/basic")
                         .with(csrf().useInvalidToken())
-                        .header("Origin", corsConfiguration.getAllowedOrigins())
+                        .header("Origin", "http://localhost:8512")
                         .header("Access-Control-Request-Method", "GET")
                 )
                 .andExpect(status().isOk())
@@ -27,7 +27,7 @@ public class SecurityCorsTest extends SecuritySetup {
     @Test
     void get_basic_post_pass() throws Exception {
         mockMvc.perform(options("/basic")
-                        .header("Origin", corsConfiguration.getAllowedOrigins())
+                        .header("Origin", "http://localhost:8512")
                         .header("Access-Control-Request-Method", "POST")
                 )
                 .andExpect(status().isOk())

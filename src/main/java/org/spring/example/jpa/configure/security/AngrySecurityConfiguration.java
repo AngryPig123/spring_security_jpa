@@ -12,6 +12,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -21,21 +22,23 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @RequiredArgsConstructor
 public class AngrySecurityConfiguration {
 
-    private final CsrfCookieFilter csrfCookieFilter;
     private final CustomCorsConfig customCorsConfig;
+    private final CsrfTokenLoggerFilter csrfTokenLoggerFilter;
+    private final CsrfTokenValidFilter csrfTokenValidFilter;
 
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+
         CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
         requestHandler.setCsrfRequestAttributeName("_csrf");
+
         http
+                .addFilterAfter(csrfTokenLoggerFilter, BasicAuthenticationFilter.class) //
+                .addFilterAfter(csrfTokenValidFilter, BasicAuthenticationFilter.class)
                 .cors((cors) -> cors.configurationSource(customCorsConfig))
-//                .csrf((csrf) -> csrf.
-//                        csrfTokenRequestHandler(requestHandler) //  csrf
-//                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-//                .addFilterAfter(csrfCookieFilter, BasicAuthenticationFilter.class)
+                .csrf((csrf)-> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .authorizeHttpRequests(
-                        (requests) -> requests.anyRequest().permitAll()
+                        (requests) -> requests.anyRequest().authenticated()
                 )
                 .formLogin(withDefaults())
                 .httpBasic(withDefaults());
@@ -54,6 +57,5 @@ public class AngrySecurityConfiguration {
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();   //  ToBE bcrypt
     }
-
 
 }
