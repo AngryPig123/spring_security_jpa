@@ -1,10 +1,7 @@
 package org.spring.example.jpa.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +17,15 @@ public class Auth {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long authId;
 
+    @Setter
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Setter
     @Column(name = "description")
     private String description;
 
+    @Setter
     @Column(name = "url", nullable = false)
     private String url;
 

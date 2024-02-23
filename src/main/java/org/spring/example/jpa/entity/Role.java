@@ -1,10 +1,7 @@
 package org.spring.example.jpa.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +18,11 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roleId;
 
+    @Setter
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
+    @Setter
     @Column(name = "description", nullable = false)
     private String description;
 

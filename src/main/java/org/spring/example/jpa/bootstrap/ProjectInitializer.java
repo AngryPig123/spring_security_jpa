@@ -14,7 +14,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
+//@Component
 @RequiredArgsConstructor
 public class ProjectInitializer implements CommandLineRunner {
 
@@ -26,22 +26,61 @@ public class ProjectInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Role roleData = roleData();
-        Role role = initRole(roleData);
+        //  firstUser email
+        //  firstRole name, description
+        //  firstAuth name, description, url
+
+        Role firstRoleData = roleData();
+        Role firstRole = initRole(firstRoleData);
+
+        User firstUserData = userData(firstRole);
+        User firstUser = initUser(firstUserData);
+        log.info("init firstUser = {}", firstUser);
+
+        Auth firstAuthData = authData();
+        Auth firstAuth = initAuth(firstAuthData);
+
+        RoleAuth firstRoleAuthData = roleAuthData(firstRole, firstAuth);
+        RoleAuth firstRoleAuth = initRoleAuth(firstRoleAuthData);
+        log.info("init firstRoleAuth = {}", firstRoleAuth);
 
 
-        User userData = userData(role);
-        User user = initUser(userData);
-        log.info("init user = {}", user);
+        Role secondRoleData = roleData();
+        secondRoleData.setName("ADMIN");
+        secondRoleData.setDescription("관리자");
+        Role secondRole = initRole(secondRoleData);
 
-        Auth authData = authData();
-        Auth auth = initAuth(authData);
+        User secondUserData = userData(secondRole);
+        secondUserData.setEmail("admin@gmail.com");
+        initUser(secondUserData);
+
+        Auth secondAuthData = authData();
+        Auth secondAuth = initAuth(secondAuthData);
+
+        RoleAuth secondRoleAuthData = roleAuthData(secondRoleData, secondAuth);
+        RoleAuth secondRoleAuth = initRoleAuth(secondRoleAuthData);
+        log.info("init secondRoleAuth = {}", secondRoleAuth);
 
 
-        RoleAuth roleAuthData = roleAuthData(role, auth);
-        RoleAuth roleAuth = initRoleAuth(roleAuthData);
-        log.info("init roleAuth = {}", roleAuth);
+        Role anotherRoleData = roleData();
+        anotherRoleData.setName("User");
+        anotherRoleData.setDescription("사용자");
+        Role anotherRole = initRole(anotherRoleData);
+
+        User anotherUserData = userData(anotherRole);
+        anotherUserData.setEmail("user@gmail.com");
+        initUser(anotherUserData);
+
+        Auth anotherAuthData = authData();
+        Auth anotherAuth = initAuth(anotherAuthData);
+
+        RoleAuth anotherRoleAuthData = roleAuthData(anotherRoleData, anotherAuth);
+        RoleAuth anotherRoleAuth = initRoleAuth(anotherRoleAuthData);
+        log.info("init anotherRoleAuth = {}", anotherRoleAuth);
+
+
     }
+
 
     private User userData(Role role) {
         return User.builder()

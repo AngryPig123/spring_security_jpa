@@ -1,4 +1,4 @@
-package org.spring.example.jpa.configure.security;
+package org.spring.example.jpa.configure.security.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
