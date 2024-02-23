@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev
   jpa:
     hibernate:
       ddl-auto: none
@@ -14,3 +16,4 @@ server:
 
 logging.level:
   org.springframework.web.cors.DefaultCorsProcessor: TRACE
+
