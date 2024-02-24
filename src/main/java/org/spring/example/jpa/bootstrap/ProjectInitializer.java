@@ -11,6 +11,7 @@ import org.spring.example.jpa.repository.AuthRoleRepository;
 import org.spring.example.jpa.repository.RoleRepository;
 import org.spring.example.jpa.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ProjectInitializer implements CommandLineRunner {
 
+    private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
     private final AuthRepository authRepository;
@@ -84,8 +86,8 @@ public class ProjectInitializer implements CommandLineRunner {
 
     private User userData(Role role) {
         return User.builder()
-                .email("anonymous@gmail.com")
-                .password("1q2w3e4r!")
+                .email("guest@gmail.com")
+                .password(passwordEncoder.encode("1q2w3e4r!"))
                 .address("동작대로 xx길 xxx xx")
                 .role(role)
                 .build();

@@ -60,27 +60,14 @@ public abstract class SecuritySetup {
         Assertions.assertNotNull(accessUser);
         Assertions.assertNotNull(httpMethod);
 
-        MockHttpServletRequestBuilder requestBuilder = null;
-
-        switch (httpMethod.name()) {
-            case "GET":
-                requestBuilder = get(endPoint);
-                break;
-            case "POST":
-                requestBuilder = post(endPoint);
-                break;
-            case "PATCH":
-                requestBuilder = patch(endPoint);
-                break;
-            case "PUT":
-                requestBuilder = put(endPoint);
-                break;
-            case "DELETE":
-                requestBuilder = delete(endPoint);
-                break;
-            default:
-                throw new IllegalArgumentException("지원되지 않는 HTTP 메소드입니다.");
-        }
+        MockHttpServletRequestBuilder requestBuilder = switch (httpMethod.name()) {
+            case "GET" -> get(endPoint);
+            case "POST" -> post(endPoint);
+            case "PATCH" -> patch(endPoint);
+            case "PUT" -> put(endPoint);
+            case "DELETE" -> delete(endPoint);
+            default -> throw new IllegalArgumentException("지원되지 않는 HTTP 메소드입니다.");
+        };
 
         // HTTP 기본 인증 및 헤더 추가
         requestBuilder
