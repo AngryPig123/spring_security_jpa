@@ -8,7 +8,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import java.util.Collections;
 import java.util.List;
 
-@Component
 public class CustomCorsConfig implements CorsConfigurationSource {
     @Override
     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {

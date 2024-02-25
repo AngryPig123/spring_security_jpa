@@ -33,11 +33,15 @@ public class User {
     @JoinColumn(name = "role_id", updatable = false)
     private Role role;
 
+    @PrePersist
+    private void initLocalDate() {
+        this.localDate = LocalDate.now();
+    }
+
     @Builder
     public User(String email, String password, String address, Role role) {
         this.email = email;
         this.password = password;
-        this.localDate = LocalDate.now();
         this.address = address;
         this.role = role;
     }

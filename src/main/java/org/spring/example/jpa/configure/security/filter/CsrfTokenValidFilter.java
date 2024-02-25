@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.Enumeration;
 
 @Slf4j
-@Component
 public class CsrfTokenValidFilter implements Filter {
 
     @Override

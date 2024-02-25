@@ -10,7 +10,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Component
+//@Component
 public class CsrfCookieFilter extends OncePerRequestFilter {
 
     //  OncePerRequestFilter : HttpServletRequest 에 대해 한번만 필터가 실행되는것을 보장함.
