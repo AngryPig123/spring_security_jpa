@@ -16,8 +16,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         log.info("CustomAuthenticationSuccessHandler");
-//                                .defaultSuccessUrl("/main", true)
-//                .failureUrl("/login-form/fail")
         response.sendRedirect("/main");
     }
 

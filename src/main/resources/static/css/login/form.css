@@ -1,5 +1,6 @@
 body {
     border: 5px solid black;
+    margin: 10px;
 }
 
 .login-form-header {
