@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.spring.example.jpa.configure.security.filter.CsrfCookieFilter;
 import org.spring.example.jpa.configure.security.filter.CsrfTokenLoggerFilter;
 import org.spring.example.jpa.configure.security.filter.CsrfTokenValidFilter;
+import org.spring.example.jpa.configure.security.handler.CustomAuthenticationEntryPoint;
 import org.spring.example.jpa.configure.security.handler.CustomAuthenticationFailureHandler;
 import org.spring.example.jpa.configure.security.handler.CustomAuthenticationSuccessHandler;
 import org.spring.example.jpa.configure.security.handler.CustomCsrfTokenRequestAttributeHandler;
@@ -18,9 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Slf4j
 @Configuration
@@ -30,13 +28,19 @@ public class AngrySecurityConfiguration {
     /* handler */
     private final CustomAuthenticationSuccessHandler authenticationSuccessHandler;
     private final CustomAuthenticationFailureHandler authenticationFailureHandler;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Value("${spring.profiles.active}")
     private String ACTIVE;
 
+
+    //    .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         httpSecurity(http)
+                .exceptionHandling(exception -> exception.
+                        accessDeniedHandler(customAuthenticationEntryPoint)
+                )
                 .authorizeHttpRequests(
                         (requests) -> requests
                                 .requestMatchers("**.ico", "/css/**", "/js/**", "/").permitAll()
