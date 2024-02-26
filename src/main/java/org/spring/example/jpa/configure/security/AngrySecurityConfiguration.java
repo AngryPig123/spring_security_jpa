@@ -5,10 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.spring.example.jpa.configure.security.filter.CsrfCookieFilter;
 import org.spring.example.jpa.configure.security.filter.CsrfTokenLoggerFilter;
 import org.spring.example.jpa.configure.security.filter.CsrfTokenValidFilter;
-import org.spring.example.jpa.configure.security.handler.CustomAuthenticationEntryPoint;
-import org.spring.example.jpa.configure.security.handler.CustomAuthenticationFailureHandler;
-import org.spring.example.jpa.configure.security.handler.CustomAuthenticationSuccessHandler;
-import org.spring.example.jpa.configure.security.handler.CustomCsrfTokenRequestAttributeHandler;
+import org.spring.example.jpa.configure.security.handler.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,18 +25,19 @@ public class AngrySecurityConfiguration {
     /* handler */
     private final CustomAuthenticationSuccessHandler authenticationSuccessHandler;
     private final CustomAuthenticationFailureHandler authenticationFailureHandler;
-    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
 
     @Value("${spring.profiles.active}")
     private String ACTIVE;
-
-
-    //    .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+    
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        httpSecurity(http)
-                .exceptionHandling(exception -> exception.
-                        accessDeniedHandler(customAuthenticationEntryPoint)
+        corsAndCsrfSetting(http)
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(authenticationEntryPoint)
+                        .accessDeniedHandler(accessDeniedHandler)
                 )
                 .authorizeHttpRequests(
                         (requests) -> requests
@@ -61,17 +59,15 @@ public class AngrySecurityConfiguration {
                         .permitAll()
                 );
 
-
         return http.build();
     }
 
-    private HttpSecurity httpSecurity(HttpSecurity http) throws Exception {
+    private HttpSecurity corsAndCsrfSetting(HttpSecurity http) throws Exception {
         if (ACTIVE.equals("test")) {
             return http
                     .cors(AbstractHttpConfigurer::disable)
                     .csrf(AbstractHttpConfigurer::disable);
         } else {
-
             return http
                     .addFilterAfter(new CsrfTokenLoggerFilter(), BasicAuthenticationFilter.class)
                     .addFilterAfter(new CsrfTokenValidFilter(), BasicAuthenticationFilter.class)
@@ -83,7 +79,6 @@ public class AngrySecurityConfiguration {
                     .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class);
         }
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {

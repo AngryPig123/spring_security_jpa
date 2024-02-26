@@ -1,10 +1,8 @@
 package org.spring.example.jpa.configure.controlleradvice;
 
 import lombok.extern.slf4j.Slf4j;
-import org.spring.example.jpa.util.exception.CustomAuthenticationException;
 import org.spring.example.jpa.util.exception.CustomArgumentNotValidException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,14 +26,6 @@ public class GlobalControllerAdvice {
         }
         log.info("errors = {}", errors);
         return errors;
-    }
-
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(CustomAuthenticationException.class)
-    public ResponseEntity<String> handleCustomAuthenticationException(CustomAuthenticationException ex) {
-
-        String message = ex.getMessage();
-        return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
     }
 
 }

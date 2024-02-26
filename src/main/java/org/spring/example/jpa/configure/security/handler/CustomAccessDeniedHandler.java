@@ -1,36 +1,36 @@
 package org.spring.example.jpa.configure.security.handler;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.spring.example.jpa.util.request.HttpServletRequestService;
 import org.spring.example.jpa.util.request.RequestInformation;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.List;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
-
+public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
     private final HttpServletRequestService httpServletRequestService;
 
-    //  401 handler
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        log.info("authentication entrypoint = {}", authException.getMessage());
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         RequestInformation requestInformation = httpServletRequestService.requestInfo(request);
 
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        String header = request.getHeader("referer");
+        log.info("header = {}", header);
+
+        log.info("access denied handler = {}", accessDeniedException.getMessage());
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.sendRedirect("/login-form?error=authentication");
+
     }
 
 }

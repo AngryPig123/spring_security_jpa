@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="/static/css/main.css" th:href="@{/css/main.css}">
     <link rel="stylesheet" href="/static/css/login/form.css" th:href="@{/css/login/form.css}">
+    <link rel="stylesheet" href="/static/css/modal/modal.css" th:href="@{/css/modal/modal.css}">
     <script type="text/javascript" src="/static/js/login/login.js" th:src="@{/js/login/login.js}"></script>
 
 </head>
@@ -40,6 +41,19 @@
 
 <footer>
 </footer>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const param = /*[[${param.error}]]*/;
+    /*]]>*/
+
+    if (param.length !== 0) {
+        window.onload = () => {
+            alert("no authentication\nlogin please");
+        }
+    }
+
+</script>
 
 </body>
 

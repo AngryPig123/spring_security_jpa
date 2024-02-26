@@ -3,15 +3,93 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Example</title>
-
+    <link rel="stylesheet" href="/static/css/main/main.css" th:href="@{/css/main/main.css}">
 </head>
 
 <body>
-<h2>hi!!</h2>
+
+<div class="main-container">
+
+    <div class="button-container">
+        <form action="/admin" method="GET" th:action="@{/admin}" th:method="GET">
+            <button class="main-button">admin-get</button>
+        </form>
+        <form action="/admin" method="POST" th:action="@{/admin}" th:method="POST">
+            <button class="main-button">admin-post</button>
+        </form>
+        <form action="/admin" method="PUT" th:action="@{/admin}" th:method="PUT">
+            <button class="main-button">admin-put</button>
+        </form>
+        <form action="/admin" method="PATCH" th:action="@{/admin}" th:method="PATCH">
+            <button class="main-button">admin-patch</button>
+        </form>
+        <form action="/admin" method="DELETE" th:action="@{/admin}" th:method="DELETE">
+            <button class="main-button">admin-delete</button>
+        </form>
+    </div>
+
+    <div class="button-container">
+        <form action="/user" method="GET" th:action="@{/user}" th:method="GET">
+            <button class="main-button">user-get</button>
+        </form>
+
+        <form action="/user" method="POST" th:action="@{/user}" th:method="POST">
+            <button class="main-button">user-post</button>
+        </form>
+
+        <form action="/user" method="PUT" th:action="@{/user}" th:method="PUT">
+            <button class="main-button">user-put</button>
+        </form>
+
+        <form action="/user" method="PATCH" th:action="@{/user}" th:method="PATCH">
+            <button class="main-button">user-patch</button>
+        </form>
+
+        <form action="/user" method="DELETE" th:action="@{/user}" th:method="DELETE">
+            <button class="main-button">user-delete</button>
+        </form>
+    </div>
+
+    <div class="button-container">
+        <form action="/guest" method="GET" th:action="@{/guest}" th:method="GET">
+            <button class="main-button">guest-get</button>
+        </form>
+        <form action="/guest" method="POST" th:action="@{/guest}" th:method="POST">
+            <button class="main-button">guest-post</button>
+        </form>
+        <form action="/guest" method="PUT" th:action="@{/guest}" th:method="PUT">
+            <button class="main-button">guest-put</button>
+        </form>
+        <form action="/guest" method="PATCH" th:action="@{/guest}" th:method="PATCH">
+            <button class="main-button">guest-patch</button>
+        </form>
+        <form action="/guest" method="DELETE" th:action="@{/guest}" th:method="DELETE">
+            <button class="main-button">guest-delete</button>
+        </form>
+    </div>
+
+    <div class="button-container">
+        <form action="/basic" method="GET" th:action="@{/basic}" th:method="GET">
+            <button class="main-button">basic-get</button>
+        </form>
+        <form action="/basic" method="POST" th:action="@{/basic}" th:method="POST">
+            <button class="main-button">basic-post</button>
+        </form>
+        <form action="/basic" method="PUT" th:action="@{/basic}" th:method="PUT">
+            <button class="main-button">basic-put</button>
+        </form>
+        <form action="/basic" method="PATCH" th:action="@{/basic}" th:method="PATCH">
+            <button class="main-button">basic-patch</button>
+        </form>
+        <form action="/basic" method="DELETE" th:action="@{/basic}" th:method="DELETE">
+            <button class="main-button">basic-delete</button>
+        </form>
+    </div>
+
+</div>
+
 </body>
 
 </html>
