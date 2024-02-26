@@ -44,6 +44,7 @@ public class HttpServletRequestServiceImpl implements HttpServletRequestService 
         if (requestCookies != null) {
             cookies.addAll(Arrays.asList(requestCookies));
         }
+
         return cookies;
     }
 

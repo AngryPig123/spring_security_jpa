@@ -31,7 +31,10 @@ public class AngrySecurityConfiguration {
 
     @Value("${spring.profiles.active}")
     private String ACTIVE;
-    
+
+    @Value("${server.port}")
+    private String SERVER_PORT;
+
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         corsAndCsrfSetting(http)
@@ -62,13 +65,18 @@ public class AngrySecurityConfiguration {
         return http.build();
     }
 
+    private HttpSecurity xssProtecting(HttpSecurity http) throws Exception {
+        //  ToDO....
+        return http;
+    }
+
     private HttpSecurity corsAndCsrfSetting(HttpSecurity http) throws Exception {
         if (ACTIVE.equals("test")) {
             return http
                     .cors(AbstractHttpConfigurer::disable)
                     .csrf(AbstractHttpConfigurer::disable);
         } else {
-            return http
+            return xssProtecting(http)
                     .addFilterAfter(new CsrfTokenLoggerFilter(), BasicAuthenticationFilter.class)
                     .addFilterAfter(new CsrfTokenValidFilter(), BasicAuthenticationFilter.class)
                     .cors((cors) -> cors.configurationSource(new CustomCorsConfig()))
